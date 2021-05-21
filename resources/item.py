@@ -1,4 +1,3 @@
-from sqlite3.dbapi2 import Cursor
 from flask_restful import Resource, reqparse
 from flask_jwt import jwt_required
 
@@ -7,15 +6,15 @@ from models.item import ItemModel
 class Item(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument("price",
-        type=float,
-        required=True,
-        help="This field cannot be left blank!"
-    )
+                        type=float,
+                        required=True,
+                        help="This field cannot be left blank!"
+                        )
     parser.add_argument("store_id",
-        type=int,
-        required=True,
-        help="Every item needs a store_id!"
-    )
+                        type=int,
+                        required=True,
+                        help="Every item needs a store_id!"
+                        )
 
     @jwt_required()
     def get(self, name):
@@ -42,19 +41,22 @@ class Item(Resource):
         item = ItemModel.find_by_name(name)
         if item:
             item.delete_from_db()
-
-        return {"message": "Item deleted"}
+            return {"message": "Item deleted"}
+        else:
+            return {"message": "Item not found."}, 404
+        
     
     def put(self, name):
         data = Item.parser.parse_args()
         
         item = ItemModel.find_by_name(name)
 
-        if item is None:
-            item = ItemModel(name, **data)
-        else:
+        
+        if item:
             item.price = data["price"]
             item.store_id = data["store_id"]
+        else:
+            item = ItemModel(name, **data)
 
         item.save_to_db()
 
@@ -63,4 +65,4 @@ class Item(Resource):
 
 class ItemList(Resource):
     def get(self):
-        return {"items": [item.json() for item in ItemModel.query.all()]}
+        return {"items": [item.json() for item in ItemModel.find_all()]}

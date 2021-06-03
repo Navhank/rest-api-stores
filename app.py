@@ -14,7 +14,8 @@ from db import db
 from blacklist import BLACKLIST
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data.db"
+db_url = os.environ.get("DATABASE_URL")
+app.config["SQLALCHEMY_DATABASE_URI"] = db_url.replace("://", "ql://", 1) # "sqlite:///data.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["PROPAGATE_EXCEPTIONS"] = True
 app.config["JWT_BLACKLIST_ENABLED"] = True

@@ -1,0 +1,461 @@
+{
+	"info": {
+		"_postman_id": "29935a35-03ca-41a4-af97-22e0cbed0867",
+		"name": "REST API stores",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "/user/<user_id>",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/user/<user_id>",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"<user_id>"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/<user_id>",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/user/<user_id>",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"<user_id>"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"1234\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stores",
+			"item": [
+				{
+					"name": "/store/<name>",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "JWT {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/store/<name>",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"store",
+								"<name>"
+							]
+						},
+						"description": "This will delete one specific store, uniquely identified by its name."
+					},
+					"response": []
+				},
+				{
+					"name": "/store/<name>",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "JWT {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/store/<name>",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"store",
+								"<name>"
+							]
+						},
+						"description": "This will return one specific store, uniquely identified by its name. No two stores may have the same name."
+					},
+					"response": []
+				},
+				{
+					"name": "/store/<name>",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "JWT {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/store/<name>",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"store",
+								"<name>"
+							]
+						},
+						"description": "This will create one specific store, uniquely identified by its name. No two stores may have the same name."
+					},
+					"response": []
+				},
+				{
+					"name": "/stores",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "JWT {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/stores",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stores"
+							]
+						},
+						"description": "This will return a list with all the stores."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Items",
+			"item": [
+				{
+					"name": "/item/<name>",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"price\": 17.99,\r\n    \"store_id\": 1\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/item/<name>",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"item",
+								"<name>"
+							]
+						},
+						"description": "This will edit one specific item, uniquely identified by its name. No two items may have the same name."
+					},
+					"response": []
+				},
+				{
+					"name": "/items",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/items",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"items"
+							]
+						},
+						"description": "This should return a list of items, each in JSON format."
+					},
+					"response": []
+				},
+				{
+					"name": "/item/<name>",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/item/<name>",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"item",
+								"<name>"
+							]
+						},
+						"description": "This will return one specific item, uniquely identified by its name. No two items may have the same name."
+					},
+					"response": []
+				},
+				{
+					"name": "/item/<name>",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"tests[\"Status code is 201\"] = responseCode.code === 201;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"price\": 15.99,\r\n    \"store_id\": 1\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/item/<name>",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"item",
+								"<name>"
+							]
+						},
+						"description": "This will create one specific item, uniquely identified by its name. No two items may have the same name. If the item already exists, it will fail."
+					},
+					"response": []
+				},
+				{
+					"name": "/item/<name>",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/item/<name>",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"item",
+								"<name>"
+							]
+						},
+						"description": "This will delete one specific item, uniquely identified by its name. No two items may have the same name."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Log in",
+			"item": [
+				{
+					"name": "/login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"tests[\"Access token was not empty\"] = jsonData.access_token !== undefined\r",
+									"pm.environment.set(\"jwt_token\", jsonData.access_token);\r",
+									"pm.environment.set(\"jwt_refresh_token\", jsonData.refresh_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"1234\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/refresh",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.environment.set(\"jwt_token\", jsonData.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_refresh_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/refresh",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/logout",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
